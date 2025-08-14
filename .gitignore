@@ -1,0 +1,10 @@
+#you don't want my direnv config
+/.envrc
+/.direnv/
+
+#caches and binaries
+/.zig-cache/
+/zig-out/
+
+#i'm lazy; gp3 header tempate
+/header.zig
