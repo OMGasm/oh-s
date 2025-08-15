@@ -16,12 +16,11 @@
 
 const w4 = @import("wasm4.zig");
 const ui = @import("ui.zig");
+const text = @import("text.zig");
 
 export fn start() void {
     w4.PALETTE.* = .{ 0x100000, 0x554444, 0xAA9A8A, 0xA5CFFF };
 }
-
-const font = @import("font.zig");
 
 var ti: u16 = 0;
 
@@ -58,9 +57,9 @@ export fn update() void {
         const y = w4.MOUSE_Y.*;
         w4.line(x, y, x, y);
     }
-    const text = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG AAAA\n\nA\n" ++
+    const text_s = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG AAAA\n\nA\n" ++
         "AAAAAAAAAAAAAAAAAAAA this is some filler text to test" ++
         " whether or not wrapping and height limiting works at all";
-    font.text(text[0 .. ti / 8], 27, 57, .{ .max_width = 50, .max_height = 50, .wrap = .normal });
-    ti = @min(ti + 1, text.len * 8);
+    text.text(text_s[0 .. ti / 8], 27, 57, .{ .max_width = 50, .max_height = 50, .wrap = .normal });
+    ti = @min(ti + 1, text_s.len * 8);
 }
