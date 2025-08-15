@@ -16,7 +16,8 @@
 
 const w4 = @import("wasm4.zig");
 const ui = @import("ui.zig");
-const text = @import("text.zig");
+const font = @import("font.zig");
+const text = @import("text.zig").with_font(font);
 
 export fn start() void {
     w4.PALETTE.* = .{ 0x100000, 0x554444, 0xAA9A8A, 0xA5CFFF };
