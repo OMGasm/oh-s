@@ -21,6 +21,10 @@ export fn start() void {
     w4.PALETTE.* = .{ 0x100000, 0x554444, 0xAA9A8A, 0xA5CFFF };
 }
 
+const font = @import("font.zig");
+
+var ti: u16 = 0;
+
 export fn update() void {
     w4.DRAW_COLORS.* = 1;
     w4.text("Hello from Zig!", 10, 10);
@@ -42,7 +46,7 @@ export fn update() void {
     _ = ui.box(.{ .x = 10, .y = 63 }, .{ .x = 13, .y = 66 }, .{ .border = 2, .bg = 3, .p2type = .point, .bordertype = .inside });
     _ = ui.box(.{ .x = 16, .y = 63 }, .{ .x = 19, .y = 66 }, .{ .border = 2, .bg = 3, .p2type = .point, .bordertype = .outside });
 
-    const foo = ui.box(.{ .x = 25, .y = 55 }, .{ .x = 50, .y = 50 }, .{ .bg = 2, .border = 3, .p2type = .size });
+    const foo = ui.box(.{ .x = 25, .y = 55 }, .{ .x = 55, .y = 50 }, .{ .bg = 2, .border = 3, .p2type = .size });
     if (foo.clicked()) {
         w4.DRAW_COLORS.* = 4;
         w4.text("foo!", foo.p1.x + 5, foo.p1.y + 20);
@@ -54,4 +58,9 @@ export fn update() void {
         const y = w4.MOUSE_Y.*;
         w4.line(x, y, x, y);
     }
+    const text = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG AAAA\n\nA\n" ++
+        "AAAAAAAAAAAAAAAAAAAA this is some filler text to test" ++
+        " whether or not wrapping and height limiting works at all";
+    font.text(text[0 .. ti / 8], 27, 57, .{ .max_width = 50, .max_height = 50, .wrap = .normal });
+    ti = @min(ti + 1, text.len * 8);
 }
